@@ -12,6 +12,7 @@ import streamlit as st
 # /* Intern modules */
 from analysis_most_common_words import most_common_words_module
 from analysis_seasonality import seasonality_analysis_module
+from analysis_temporelle import temporality_analysis_module
 from analysis_top_15 import top_50_analysis_module
 from analysis_weekly import weekly_analysis_module
 from functions import DataExtractor
@@ -47,6 +48,8 @@ class WebApp:
             self.interactions_df, log_module, cfg)
         self.most_common_words_module = most_common_words_module(
             self.recipes_df, self.interactions_df, log_module, cfg)
+        self.temporality_analysis_module = temporality_analysis_module(
+            self.recipes_df, self.interactions_df, log_module)
 
     def load_data(self):
         """Load data in memory."""
@@ -68,6 +71,7 @@ class WebApp:
                 "Seasonality Analysis 🍂",
                 "Top 15 Recipes ⭐",
                 "Top Words 🔤",
+                "Temporality Analysis",
             ],
 
         )
@@ -131,6 +135,9 @@ class WebApp:
         # Show most frequent words appearing in recipe titles
         elif section == "Top Words 🔤":
             self.most_common_words_module.run()
+
+        elif section == "Temporality Analysis":
+            self.temporality_analysis_module.run()
 
         # Footer
         st.markdown("---\nUse the sidebar to navigate through the analysis.")
